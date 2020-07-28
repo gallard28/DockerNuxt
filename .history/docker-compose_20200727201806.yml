@@ -1,0 +1,22 @@
+version: "3"
+
+services: 
+  nuxt:
+    build: ./app/
+    container_name: docker-nuxt-demo
+    restart: always
+    ports:
+      -"3000:3000"
+    command: 
+      yarn run start
+    
+    nginx: 
+      image: nginx:1.13
+      container_name: docker-nuxt-nginx
+      ports:
+        -"80:80"
+      volumes:
+        - ./nginx:/etc/nginx/conf.d
+      depends_on:
+        -nuxt
+
